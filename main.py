@@ -1,22 +1,6 @@
-import random
+import os
 
-import praw
-from fastapi import FastAPI
-from fastapi.responses import RedirectResponse
+import uvicorn
 
-app = FastAPI()
-
-red_api = praw.Reddit("bot1", user_agent="g.ronnia.me by /u/ListeningTo")
-subreddit = red_api.subreddit("osubuddyretard")
-
-
-@app.get("/")
-async def root():
-    hot_entries_gen = subreddit.hot()
-
-    random_entry = random.randint(0, 100)
-    counter = 0
-    for entry in hot_entries_gen:
-        if counter == random_entry:
-            return RedirectResponse(entry.url)
-        counter += 1
+if __name__ == "__main__":
+    uvicorn.run("app:app", host="0.0.0.0", port=int(os.getenv('WEB_PUBLISH_PORT')), reload=True)

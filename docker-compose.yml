@@ -1,0 +1,28 @@
+version: '3'
+services:
+  gdotronnia:
+    image: g_dot_ronnia
+    build: .
+    restart: always
+    env_file:
+      - .env
+    environment:
+      - PYTHONUNBUFFERED=true
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.score-tracker-server.rule=Host(`g.ronnia.me`)"
+      - "traefik.http.routers.score-tracker-server.tls=true"
+      - "traefik.http.routers.score-tracker-server.tls.certresolver=letsencrypt"
+      - "traefik.http.services.score-tracker-service.loadbalancer.server.port=${WEB_PUBLISH_PORT}"
+    expose:
+      - ${WEB_PUBLISH_PORT}
+    ports:
+      - ${WEB_PUBLISH_PORT}:${WEB_PUBLISH_PORT}
+  traefik:
+    image: traefik:v2.2
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /home/efehanatici/traefik/traefik.prod.toml:/etc/traefik/traefik.toml
