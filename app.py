@@ -12,7 +12,7 @@ subreddit = red_api.subreddit("osubuddyretard")
 
 @app.get("/")
 async def root():
-    hot_entries_gen = subreddit.hot()
+    hot_entries_gen = await subreddit.hot()
 
     random_entry = random.randint(0, 100)
     counter = 0
