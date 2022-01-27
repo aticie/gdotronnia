@@ -1,12 +1,12 @@
 import random
 
-import praw
+import asyncpraw
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 
 app = FastAPI()
 
-red_api = praw.Reddit(user_agent="g.ronnia.me by /u/ListeningTo")
+red_api = asyncpraw.Reddit(user_agent="g.ronnia.me by /u/ListeningTo")
 subreddit = red_api.subreddit("osubuddyretard")
 
 
