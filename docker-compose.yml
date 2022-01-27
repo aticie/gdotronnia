@@ -16,8 +16,6 @@ services:
       - "traefik.http.services.score-tracker-service.loadbalancer.server.port=${WEB_PUBLISH_PORT}"
     expose:
       - ${WEB_PUBLISH_PORT}
-    ports:
-      - ${WEB_PUBLISH_PORT}:${WEB_PUBLISH_PORT}
   traefik:
     image: traefik:v2.2
     ports:
